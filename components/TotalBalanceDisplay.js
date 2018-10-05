@@ -8,7 +8,7 @@ import Fonts from "../constants/Fonts";
 
 export default function TotalBalanceDisplay({ balance }) {
   return (
-    <AccentContainer height={28 * Layout.spacing} waveHeight={23}>
+    <AccentContainer height={26 * Layout.spacing} waveHeight={23}>
       <View style={styles.accentContainer}>
         <FormattedMessage id="my-wallets.total-balance">
           {msg => <Text style={styles.balanceTitle}>{msg}</Text>}
@@ -22,7 +22,8 @@ export default function TotalBalanceDisplay({ balance }) {
 const styles = StyleSheet.create({
   accentContainer: {
     flex: 1,
-    margin: Layout.sideMargin,
+    marginLeft: Layout.sideMargin,
+    marginRight: Layout.sideMargin,
     justifyContent: "center"
   },
   balanceTitle: {

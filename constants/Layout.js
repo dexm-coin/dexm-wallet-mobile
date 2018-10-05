@@ -1,4 +1,4 @@
-import { Dimensions } from "react-native";
+import { Dimensions, Platform, NativeModules } from "react-native";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -12,5 +12,6 @@ export default {
   },
   isSmallDevice: width < 375,
   spacing,
-  sideMargin: spacing * 3
+  sideMargin: spacing * 3,
+  statusBar: Platform.OS === "ios" ? 20 : NativeModules.StatusBarManager.HEIGHT
 };

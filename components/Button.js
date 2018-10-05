@@ -24,8 +24,8 @@ export default function Button({
   const containerStyle =
     variant === "filled"
       ? styles.containerFilled
-      : variant === "contained"
-        ? styles.containerContained
+      : variant === "outlined"
+        ? styles.containerOutlined
         : styles.container;
   const labelStyle = variant === "filled" ? styles.labelAccent : styles.label;
 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     ...commonContainer
   },
-  containerContained: {
+  containerOutlined: {
     borderRadius: 4,
     borderWidth: 1,
     borderColor: Colors.lightColor,

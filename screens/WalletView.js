@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  FlatList,
-  Text
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
 import Colors from "../constants/Colors";
 import ContentTitle from "../components/ContentTitle";
@@ -46,13 +40,13 @@ export default class WalletView extends React.Component {
 
     return (
       <View style={styles.container}>
-        <AccentContainer height={57 * Layout.spacing} waveHeight={23}>
+        <AccentContainer height={55 * Layout.spacing} waveHeight={23}>
+          <BackButton
+            style={styles.backButton}
+            labelId="my-wallets.title"
+            onClick={() => navigation.pop()}
+          />
           <View style={styles.accentContainer}>
-            <BackButton
-              style={styles.backButton}
-              labelId="my-wallets.title"
-              onClick={() => navigation.pop()}
-            />
             <WalletInfoDisplay
               name={wallet.name}
               balance={wallet.balance}
@@ -64,7 +58,7 @@ export default class WalletView extends React.Component {
               <Button
                 style={styles.actionButton}
                 labelId="wallet-view.receive"
-                variant="contained"
+                variant="outlined"
                 icon={<ReceiveIcon receive color={Colors.lightColor} />}
               />
               <Button
@@ -96,12 +90,13 @@ const styles = StyleSheet.create({
   },
   accentContainer: {
     flex: 1,
-    margin: Layout.sideMargin,
+    marginLeft: Layout.sideMargin,
+    marginRight: Layout.sideMargin,
     justifyContent: "center"
   },
   backButton: {
-    marginLeft: -Layout.spacing * 1.5,
-    marginBottom: Layout.spacing * 2.5
+    marginTop: Layout.spacing * 2
+    // marginBottom: Layout.spacing * 2.5
   },
   actionButtonsContainer: {
     justifyContent: "flex-end",

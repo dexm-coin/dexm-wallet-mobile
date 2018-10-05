@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     ...Fonts.defaultAccent,
     fontWeight: "600",
     fontSize: 38,
-    marginBottom: Layout.spacing * 2
+    marginBottom: Layout.spacing * 2.5
   },
   balanceColumn: {
     flex: 1

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, SafeAreaView, Platform, StatusBar } from "react-native";
 import { Svg } from "expo";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
@@ -14,7 +14,7 @@ export default class AccentContainer extends React.Component {
     const diff = width * xScale - width;
 
     return (
-      <View style={styles.container}>
+      <React.Fragment>
         <Svg viewBox={`0 0 ${width} ${height}`} {...{ width, height }}>
           <Defs>
             <Colors.accentGradient id="accentGradient" />
@@ -48,10 +48,10 @@ export default class AccentContainer extends React.Component {
             </G>
           </G>
         </Svg>
-        <View style={styles.content} height={height}>
+        <SafeAreaView style={styles.content} height={height - waveHeight * 2}>
           {children}
-        </View>
-      </View>
+        </SafeAreaView>
+      </React.Fragment>
     );
   }
 }
@@ -60,6 +60,9 @@ const styles = StyleSheet.create({
   content: {
     position: "absolute",
     width: Layout.window.width,
-    top: 0
+    top: Platform.OS === "ios" ? 0 : StatusBar.currentHeight
+  },
+  safeArea: {
+    flex: 1
   }
 });

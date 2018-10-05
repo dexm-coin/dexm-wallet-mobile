@@ -24,6 +24,8 @@ export default function BackButton({ labelId, onClick, ...rest }) {
 
 const styles = StyleSheet.create({
   container: {
+    marginLeft: Layout.spacing * 1.5,
+    marginTop: Layout.spacing * 1,
     marginBottom: Layout.spacing * 1,
     flexDirection: "row",
     alignItems: "center"
