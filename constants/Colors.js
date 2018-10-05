@@ -1,14 +1,18 @@
-const tintColor = '#2f95dc';
+import React from "react";
+import { Svg } from "expo";
+
+const { LinearGradient, Stop } = Svg;
 
 export default {
-  tintColor,
-  tabIconDefault: '#ccc',
-  tabIconSelected: tintColor,
-  tabBar: '#fefefe',
-  errorBackground: 'red',
-  errorText: '#fff',
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
-  noticeBackground: tintColor,
-  noticeText: '#fff',
+  lightColor: "#FFFCFE",
+  accentColor: "#701547",
+  selectColor: "#70154722",
+  textColor: "#330A20",
+  accentGradient: ({ id }) => (
+    <LinearGradient id={id} x1={0} x2={0} y1={0} y2={"100%"}>
+      <Stop offset="0" stopColor="rgb(149,28,93)" stopOpacity="1" />
+      <Stop offset="0.537" stopColor="rgb(183,62,150)" stopOpacity="1" />
+      <Stop offset="1" stopColor="rgb(166,33,194)" stopOpacity="1" />
+    </LinearGradient>
+  )
 };
