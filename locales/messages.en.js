@@ -4,7 +4,21 @@ export default {
   "wallet-view.title": "Activity",
   "wallet-view.send": "SEND",
   "wallet-view.receive": "RECEIVE",
+  "wallet-view.from": "from",
+  "wallet-view.to": "to",
   "wallet-info-display.balance": "Balance",
   "wallet-info-display.revenues": "Revenues",
-  "wallet-info-display.expenses": "Expenses"
+  "wallet-info-display.expenses": "Expenses",
+  "send-money.back": "Back",
+  "send-money.title": "Send Money",
+  "send-money.description": "Description",
+  "send-money.amount": "Amount",
+  "send-money.recipient-description": "Recipient Description",
+  "send-money.recipient-id": "Recipient Id",
+  "send-money.recents": "RECENTS",
+  "send-money.send": "SEND",
+  "send-money.contracts": "CONTRACTS",
+  "receive-money.back": "Back",
+  "receive-money.title": "Receive Money",
+  "receive-money.share": "SHARE"
 };

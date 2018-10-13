@@ -13,5 +13,6 @@ export default {
   isSmallDevice: width < 375,
   spacing,
   sideMargin: spacing * 3,
-  statusBar: Platform.OS === "ios" ? 20 : NativeModules.StatusBarManager.HEIGHT
+  statusBar: Platform.OS === "ios" ? 20 : NativeModules.StatusBarManager.HEIGHT,
+  endMargin: spacing * 8
 };

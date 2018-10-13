@@ -1,19 +1,19 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 
 import Colors from "../constants/Colors";
 import ContentTitle from "../components/ContentTitle";
 import Layout from "../constants/Layout";
-import PlusIcon from "../icons/PlusIcon";
 import WalletInfoDisplay from "../components/WalletInfoDisplay";
 import AccentContainer from "../components/AccentContainer";
 import Divider from "../components/Divider";
 import Button from "../components/Button";
 import SendIcon from "../icons/SendIcon";
 import ReceiveIcon from "../icons/ReceiveIcon";
+import BackButton from "../components/BackButton";
+import ActivityElement from "../components/ActivityElement";
 
 import { getWallet } from "../apis/WalletInfo";
-import BackButton from "../components/BackButton";
 
 export default class WalletView extends React.Component {
   static navigationOptions = {
@@ -22,8 +22,12 @@ export default class WalletView extends React.Component {
 
   state = {
     wallet: {
+      id: "",
       name: "",
-      balance: 0
+      balance: 0,
+      revenues: 0,
+      expenses: 0,
+      activity: []
     }
   };
 
@@ -39,54 +43,82 @@ export default class WalletView extends React.Component {
     const { wallet } = this.state;
 
     return (
-      <View style={styles.container}>
-        <AccentContainer height={55 * Layout.spacing} waveHeight={23}>
-          <BackButton
-            style={styles.backButton}
-            labelId="my-wallets.title"
-            onClick={() => navigation.pop()}
-          />
-          <View style={styles.accentContainer}>
-            <WalletInfoDisplay
-              name={wallet.name}
-              balance={wallet.balance}
-              revenues={wallet.revenues}
-              expenses={wallet.expenses}
+      <ScrollView style={styles.scroller}>
+        <View style={styles.container}>
+          <AccentContainer height={55 * Layout.spacing} waveHeight={23}>
+            <BackButton
+              style={styles.backButton}
+              labelId="my-wallets.title"
+              onClick={() => navigation.pop()}
             />
-            <Divider accent />
-            <View style={styles.actionButtonsContainer}>
-              <Button
-                style={styles.actionButton}
-                labelId="wallet-view.receive"
-                variant="outlined"
-                icon={<ReceiveIcon receive color={Colors.lightColor} />}
+            <View style={styles.accentContainer}>
+              <WalletInfoDisplay
+                name={wallet.name}
+                balance={wallet.balance}
+                revenues={wallet.revenues}
+                expenses={wallet.expenses}
               />
-              <Button
-                style={styles.actionButton}
-                labelId="wallet-view.send"
-                variant="filled"
-                icon={<SendIcon color={Colors.lightColor} />}
-              />
+              <Divider accent />
+              <View style={styles.actionButtonsContainer}>
+                <Button
+                  style={styles.actionButton}
+                  labelId="wallet-view.receive"
+                  variant="outlined"
+                  inverted
+                  icon={<ReceiveIcon receive color={Colors.lightColor} />}
+                  onClick={() =>
+                    navigation.push("ReceiveMoney", {
+                      walletId: wallet.id
+                    })
+                  }
+                />
+                <Button
+                  style={styles.actionButton}
+                  labelId="wallet-view.send"
+                  variant="filled"
+                  inverted
+                  icon={<SendIcon color={Colors.lightColor} />}
+                  onClick={() =>
+                    navigation.push("SendMoney", {
+                      walletId: wallet.id
+                    })
+                  }
+                />
+              </View>
+            </View>
+          </AccentContainer>
+
+          <View style={styles.content}>
+            <ContentTitle titleId="wallet-view.title" />
+            <View style={styles.list}>
+              {wallet.activity.map((item, i) => (
+                <ActivityElement
+                  first={i === 0}
+                  last={i === wallet.activity.length - 1}
+                  key={item.description + item.recipientid + item.timestamp}
+                  description={item.description}
+                  amount={item.amount}
+                  recipient={item.recipientDescription}
+                  date={item.timestamp}
+                />
+              ))}
             </View>
           </View>
-        </AccentContainer>
-
-        <View style={styles.content}>
-          <ContentTitle titleId="wallet-view.title">
-            <TouchableOpacity onPress={() => {}}>
-              <PlusIcon color={Colors.textColor} />
-            </TouchableOpacity>
-          </ContentTitle>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scroller: {
     flex: 1,
     backgroundColor: Colors.lightColor
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.lightColor,
+    marginBottom: Layout.endMargin
   },
   accentContainer: {
     flex: 1,
@@ -108,5 +140,9 @@ const styles = StyleSheet.create({
   },
   content: {
     margin: Layout.sideMargin
+  },
+  list: {
+    marginLeft: Layout.spacing,
+    marginRight: Layout.spacing
   }
 });

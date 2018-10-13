@@ -49,13 +49,12 @@ export default class MyWallets extends React.Component {
             </TouchableOpacity>
           </ContentTitle>
           <FlatList
-            ItemSeparatorComponent={({ highlighted }) => (
-              <Divider padding={Layout.spacing} />
-            )}
+            ItemSeparatorComponent={({ highlighted }) => <Divider />}
             data={wallets}
             keyExtractor={item => item.name}
             renderItem={({ item, ...rest }) => (
               <WalletListItem
+                key={item.name}
                 name={item.name}
                 balance={item.balance}
                 onOpen={() =>

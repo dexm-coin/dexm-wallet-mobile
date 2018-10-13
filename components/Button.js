@@ -19,15 +19,19 @@ export default function Button({
   variant,
   icon,
   onClick,
+  inverted,
   ...rest
 }) {
   const containerStyle =
     variant === "filled"
       ? styles.containerFilled
-      : variant === "outlined"
-        ? styles.containerOutlined
-        : styles.container;
-  const labelStyle = variant === "filled" ? styles.labelAccent : styles.label;
+      : variant === "outlined" && inverted
+        ? styles.containerOutlinedInverted
+        : variant === "outlined"
+          ? styles.containerOutlined
+          : styles.container;
+  const labelStyle =
+    variant === "filled" || inverted ? styles.labelAccent : styles.label;
 
   const Touchable =
     Platform.OS == "ios" ? TouchableOpacity : TouchableNativeFeedback;
@@ -73,6 +77,12 @@ const styles = StyleSheet.create({
   containerOutlined: {
     borderRadius: 4,
     borderWidth: 1,
+    borderColor: Colors.accentColor,
+    ...commonContainer
+  },
+  containerOutlinedInverted: {
+    borderRadius: 4,
+    borderWidth: 1,
     borderColor: Colors.lightColor,
     ...commonContainer
   },
@@ -86,7 +96,7 @@ const styles = StyleSheet.create({
     ...commonLabel
   },
   label: {
-    ...Fonts.defaultAccent,
+    ...Fonts.default,
     ...commonLabel
   },
   icon: {
