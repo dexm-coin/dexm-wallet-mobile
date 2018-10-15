@@ -1,28 +1,64 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import ReciveTab from './tabs/recive'
+import React from "react";
+import { StatusBar, StyleSheet, View } from "react-native";
+import { AppLoading, Font, Icon } from "expo";
 
-Navigation.registerComponent('dexm.recive', () => ReciveTab)
+import AppNavigator from "./navigation/AppNavigator";
+import Colors from "./constants/Colors";
+import DynamicIntlProvider from "./containers/DynamicIntlProvider";
 
-Navigation.startTabBasedApp({
-  tabs : [
-    {
-      label: 'Wallets',
-      screen: 'dexm.recive',
-      title: 'Wallets',
-      icon: require('./img/wallets.png'),
-    },
+export default class App extends React.Component {
+  state = {
+    isLoadingComplete: false
+  };
 
-    {
-      label: 'Messages',
-      screen: 'dexm.recive',
-      title: 'Contacts',
-      icon: require('./img/contacts.png'),
-    },
-  ],
-
-  appStyle: {
-    largeTitle: true,
+  render() {
+    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+      return (
+        <AppLoading
+          startAsync={this._loadResourcesAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
+        />
+      );
+    } else {
+      return (
+        <DynamicIntlProvider locale={"en"}>
+          <View style={styles.container}>
+            <StatusBar barStyle="light-content" />
+            <AppNavigator />
+          </View>
+        </DynamicIntlProvider>
+      );
+    }
   }
-})
+
+  _loadResourcesAsync = async () => {
+    return Promise.all([
+      // Asset.loadAsync([
+      //   require('./assets/images/robot-dev.png'),
+      //   require('./assets/images/robot-prod.png'),
+      // ]),
+      Font.loadAsync({
+        ...Icon.Ionicons.font,
+        Lato: require("./assets/fonts/Lato-Regular.ttf")
+      })
+    ]);
+  };
+
+  _handleLoadingError = error => {
+    // In this case, you might want to report the error to your error
+    // reporting service, for example Sentry
+    console.warn(error);
+  };
+
+  _handleFinishLoading = () => {
+    this.setState({ isLoadingComplete: true });
+  };
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.lightColor
+  }
+});

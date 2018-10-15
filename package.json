@@ -1,28 +1,29 @@
 {
-  "name": "dexm-wallet-mobile",
-  "version": "0.1.0",
+  "name": "my-new-project",
+  "main": "node_modules/expo/AppEntry.js",
   "private": true,
-  "devDependencies": {
-    "babel-preset-react-native-stage-0": "^1.0.1",
-    "jest": "^22.4.3",
-    "jest-react-native": "^18.0.0",
-    "react-test-renderer": "16.3.0-alpha.1"
-  },
   "scripts": {
-    "start": "react-native start",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "test": "jest"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject",
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "jest-expo"
   },
   "dependencies": {
-    "elliptic": "^6.4.0",
-    "react": "16.3.0-alpha.1",
-    "react-native": "0.54.0",
-    "react-native-keychain": "^3.0.0-rc.3",
-    "react-native-navigation": "^1.1.434",
-    "react-native-vector-icons": "^4.6.0"
+    "@expo/samples": "2.1.1",
+    "expo": "^30.0.1",
+    "intl": "^1.2.5",
+    "luxon": "^1.4.3",
+    "react": "16.3.1",
+    "react-intl": "^2.7.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-qrcode": "^0.2.7",
+    "react-navigation": "^2.16.0"
+  },
+  "devDependencies": {
+    "jest-expo": "30.0.0"
   }
 }
