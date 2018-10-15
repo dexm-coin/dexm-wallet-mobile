@@ -42,7 +42,7 @@ const ActivityElementJoiner = ({ first, last }) => (
 const Touchable =
   Platform.OS == "ios" ? TouchableOpacity : TouchableNativeFeedback;
 
-export default function ActivityElement({
+export default function ActivityListItem({
   description,
   date,
   amount,
@@ -65,7 +65,15 @@ export default function ActivityElement({
               <View style={styles.spacer}>
                 <Text style={styles.description}>{description}</Text>
               </View>
-              <Text style={styles.value}>
+              <Text
+                style={[
+                  styles.value,
+                  {
+                    color:
+                      amount >= 0 ? Colors.positiveColor : Colors.negativeColor
+                  }
+                ]}
+              >
                 {sign}
                 {Math.abs(amount || 0).toFixed(2)} ⅅ
               </Text>
@@ -94,8 +102,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     height: Layout.spacing * 8
-    // borderColor: "red",
-    // borderWidth: 1
   },
   joiner: {
     marginRight: Layout.spacing * 3
@@ -111,9 +117,6 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row"
-  },
-  trendIcon: {
-    margin: Layout.spacing
   },
   description: {
     ...Fonts.default,

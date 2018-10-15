@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import SendIcon from "../icons/SendIcon";
 import ReceiveIcon from "../icons/ReceiveIcon";
 import BackButton from "../components/BackButton";
-import ActivityElement from "../components/ActivityElement";
+import ActivityListItem from "../components/ActivityListItem";
 
 import { getWallet } from "../apis/WalletInfo";
 
@@ -92,7 +92,7 @@ export default class WalletView extends React.Component {
             <ContentTitle titleId="wallet-view.title" />
             <View style={styles.list}>
               {wallet.activity.map((item, i) => (
-                <ActivityElement
+                <ActivityListItem
                   first={i === 0}
                   last={i === wallet.activity.length - 1}
                   key={item.description + item.recipientid + item.timestamp}

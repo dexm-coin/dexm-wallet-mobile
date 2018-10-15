@@ -1,19 +1,12 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  FlatList,
-  Text
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 
 import Colors from "../constants/Colors";
-import TotalBalanceDisplay from "../components/TotalBalanceDisplay";
 import ContentTitle from "../components/ContentTitle";
 import Layout from "../constants/Layout";
 import PlusIcon from "../icons/PlusIcon";
+import TotalBalanceDisplay from "../components/TotalBalanceDisplay";
 import WalletListItem from "../components/WalletListItem";
-import Divider from "../components/Divider";
 
 import { getWallets, getTotalBalance } from "../apis/WalletInfo";
 
@@ -39,21 +32,25 @@ export default class MyWallets extends React.Component {
     const { wallets, totalBalance } = this.state;
 
     return (
-      <View style={styles.container}>
-        <TotalBalanceDisplay balance={totalBalance} />
+      <ScrollView style={styles.scroller}>
+        <View style={styles.container}>
+          <TotalBalanceDisplay balance={totalBalance} />
 
-        <View style={styles.content}>
-          <ContentTitle titleId="my-wallets.title">
-            <TouchableOpacity onPress={() => {}}>
-              <PlusIcon color={Colors.textColor} />
-            </TouchableOpacity>
-          </ContentTitle>
-          <FlatList
-            ItemSeparatorComponent={({ highlighted }) => <Divider />}
-            data={wallets}
-            keyExtractor={item => item.name}
-            renderItem={({ item, ...rest }) => (
+          <View style={styles.content}>
+            <ContentTitle titleId="my-wallets.title">
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.push("AddWallet", {
+                    stage: "InsertName"
+                  })
+                }
+              >
+                <PlusIcon color={Colors.textColor} />
+              </TouchableOpacity>
+            </ContentTitle>
+            {wallets.map((item, i) => (
               <WalletListItem
+                first={i === 0}
                 key={item.name}
                 name={item.name}
                 balance={item.balance}
@@ -62,20 +59,24 @@ export default class MyWallets extends React.Component {
                     walletId: item.id
                   })
                 }
-                {...rest}
               />
-            )}
-          />
+            ))}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scroller: {
     flex: 1,
     backgroundColor: Colors.lightColor
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.lightColor,
+    marginBottom: Layout.endMargin
   },
   content: {
     margin: Layout.sideMargin

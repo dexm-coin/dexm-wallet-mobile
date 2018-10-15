@@ -11,43 +11,15 @@ import SendIcon from "../icons/SendIcon";
 import BackButton from "../components/BackButton";
 import TextInput from "../components/TextInput";
 import DescriptionIcon from "../icons/DescriptionIcon";
-import PersonIcon from "../icons/PersonIcon";
-
-import { getWallet, getRecentRecipients } from "../apis/WalletInfo";
 
 export default class AddWallet extends React.Component {
   static navigationOptions = {
     header: null
   };
 
-  state = {
-    wallet: {
-      name: "",
-      balance: 0,
-      revenues: 0,
-      expenses: 0,
-      activity: []
-    },
-    formState: {
-      description: "",
-      amount: 0,
-      recipientDescription: "",
-      recipientId: ""
-    },
-    recents: []
-  };
-
-  componentDidMount() {
-    const walletId = this.props.navigation.getParam("walletId", null);
-    const wallet = getWallet(walletId);
-    const recents = getRecentRecipients();
-
-    this.setState({ wallet, recents });
-  }
-
   render() {
     const { navigation } = this.props;
-    const { wallet, formState } = this.state;
+    const stage = this.props.navigation.getParam("stage", null);
 
     return (
       <ScrollView style={styles.scroller}>
@@ -77,32 +49,6 @@ export default class AddWallet extends React.Component {
               onChange={this.handleChangeForm("description")}
               icon={<DescriptionIcon color={Colors.textColor} />}
             />
-            <TextInput
-              numeric
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={styles.formField}
-              labelId="send-money.amount"
-              value={String(formState.amount)}
-              onChange={this.handleChangeForm("amount")}
-              icon={<Text style={styles.iconD}>ⅅ</Text>}
-            />
-            <TextInput
-              style={styles.formField}
-              labelId="send-money.recipient-description"
-              value={String(formState.recipientDescription)}
-              onChange={this.handleChangeForm("recipientDescription")}
-              icon={<PersonIcon color={Colors.textColor} />}
-            />
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={styles.formField}
-              labelId="send-money.recipient-id"
-              value={String(formState.recipientId)}
-              onChange={this.handleChangeForm("recipientId")}
-              icon={<PersonIcon color={Colors.textColor} />}
-            />
             <View style={styles.actionButtonsContainer}>
               <Button
                 style={styles.actionButton}
@@ -122,15 +68,6 @@ export default class AddWallet extends React.Component {
       </ScrollView>
     );
   }
-
-  handleChangeForm = id => value => {
-    this.setState(({ formState }) => ({
-      formState: {
-        ...formState,
-        [id]: value
-      }
-    }));
-  };
 }
 
 const styles = StyleSheet.create({

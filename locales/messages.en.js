@@ -20,5 +20,11 @@ export default {
   "send-money.contracts": "CONTRACTS",
   "receive-money.back": "Back",
   "receive-money.title": "Receive Money",
-  "receive-money.share": "SHARE"
+  "receive-money.share": "SHARE",
+  "add-wallet.add-wallet": "Add Wallet",
+  "add-wallet.name": "How do you want to name your wallet?",
+  "add-wallet.password": "Choose your password",
+  "add-wallet.import": "Would you like to import a wallet?",
+  "add-wallet.face-id": "Would you like to login with Face ID?",
+  "add-wallet.fingerprint": "Would you like to login with fingerprint?"
 };

@@ -12,21 +12,25 @@ import Fonts from "../constants/Fonts";
 import Layout from "../constants/Layout";
 import ChevronIcon from "../icons/ChevronIcon";
 import Colors from "../constants/Colors";
+import Divider from "./Divider";
 
 const Touchable =
   Platform.OS == "ios" ? TouchableHighlight : TouchableNativeFeedback;
 
-export default function WalletListItem({ name, balance, onOpen }) {
+export default function WalletListItem({ name, balance, onOpen, first }) {
   return (
-    <Touchable onPress={onOpen} underlayColor={Colors.selectColor}>
-      <View style={styles.container}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.balance}>{balance} ⅅ</Text>
-        <View style={styles.chevron}>
-          <ChevronIcon color={Colors.textColor} />
+    <React.Fragment>
+      {!first && <Divider />}
+      <Touchable onPress={onOpen} underlayColor={Colors.selectColor}>
+        <View style={styles.container}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.balance}>{balance} ⅅ</Text>
+          <View style={styles.chevron}>
+            <ChevronIcon color={Colors.textColor} />
+          </View>
         </View>
-      </View>
-    </Touchable>
+      </Touchable>
+    </React.Fragment>
   );
 }
 
