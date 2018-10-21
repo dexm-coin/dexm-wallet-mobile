@@ -40,9 +40,7 @@ export default class MyWallets extends React.Component {
             <ContentTitle titleId="my-wallets.title">
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("AddWallet", {
-                    stage: "InsertName"
-                  })
+                  navigation.push("AddWallet")
                 }
               >
                 <PlusIcon color={Colors.textColor} />

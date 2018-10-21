@@ -22,6 +22,7 @@ export default {
   "receive-money.title": "Receive Money",
   "receive-money.share": "SHARE",
   "add-wallet.add-wallet": "Add Wallet",
+  "add-wallet.back": "Back",
   "add-wallet.name": "How do you want to name your wallet?",
   "add-wallet.password": "Choose your password",
   "add-wallet.import": "Would you like to import a wallet?",
