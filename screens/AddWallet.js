@@ -17,9 +17,14 @@ export default class AddWallet extends React.Component {
     header: null
   };
 
+  state = {
+    formState: {
+      walletName: ""
+    }
+  }
+
   render() {
     const { navigation } = this.props;
-    const stage = this.props.navigation.getParam("stage", null);
 
     return (
       <ScrollView style={styles.scroller}>
@@ -27,17 +32,17 @@ export default class AddWallet extends React.Component {
           <AccentContainer height={28 * Layout.spacing} waveHeight={23}>
             <BackButton
               style={styles.backButton}
-              labelId="send-money.back"
+              labelId="add-wallet.back"
               onClick={() => navigation.pop()}
             />
             <View style={styles.accentContainer}>
               <View style={styles.titleLine}>
-                <FormattedMessage id="send-money.title">
+                <FormattedMessage id="add-wallet.add-wallet">
                   {msg => <Text style={styles.title}>{msg}</Text>}
                 </FormattedMessage>
                 <SendIcon size={Layout.spacing * 7} color={Colors.lightColor} />
               </View>
-              <Text style={styles.walletName}>{wallet.name}</Text>
+              <Text style={styles.walletName}>abc</Text>
             </View>
           </AccentContainer>
 

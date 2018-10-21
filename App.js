@@ -1,10 +1,24 @@
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { AppLoading, Font, Icon } from "expo";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
 
 import AppNavigator from "./navigation/AppNavigator";
 import Colors from "./constants/Colors";
 import DynamicIntlProvider from "./containers/DynamicIntlProvider";
+import reducer from "./reducers/";
+import initialState from "./reducers/initialState";
+import sagas from "./sagas/";
+
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  reducer,
+  initialState,
+  applyMiddleware(sagaMiddleware)
+);
+sagaMiddleware.run(sagas);
 
 export default class App extends React.Component {
   state = {
@@ -22,22 +36,20 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <DynamicIntlProvider locale={"en"}>
-          <View style={styles.container}>
-            <StatusBar barStyle="light-content" />
-            <AppNavigator />
-          </View>
-        </DynamicIntlProvider>
+        <Provider store={store}>
+          <DynamicIntlProvider>
+            <View style={styles.container}>
+              <StatusBar barStyle="light-content" />
+              <AppNavigator />
+            </View>
+          </DynamicIntlProvider>
+        </Provider>
       );
     }
   }
 
   _loadResourcesAsync = async () => {
     return Promise.all([
-      // Asset.loadAsync([
-      //   require('./assets/images/robot-dev.png'),
-      //   require('./assets/images/robot-prod.png'),
-      // ]),
       Font.loadAsync({
         ...Icon.Ionicons.font,
         Lato: require("./assets/fonts/Lato-Regular.ttf")
@@ -46,8 +58,6 @@ export default class App extends React.Component {
   };
 
   _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
     console.warn(error);
   };
 
