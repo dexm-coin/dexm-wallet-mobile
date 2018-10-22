@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import ReceiveIcon from "../icons/ReceiveIcon";
 import BackButton from "../components/BackButton";
 
-import { getWallet } from "../apis/WalletInfo";
+import { getWallet } from "../apis/walletInfo";
 
 export default class ReceiveMoney extends React.Component {
   static navigationOptions = {

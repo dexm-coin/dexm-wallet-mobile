@@ -1,64 +1,44 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
+import { connect } from "react-redux";
 
 import Colors from "../constants/Colors";
 import ContentTitle from "../components/ContentTitle";
 import Layout from "../constants/Layout";
 import PlusIcon from "../icons/PlusIcon";
-import TotalBalanceDisplay from "../components/TotalBalanceDisplay";
-import WalletListItem from "../components/WalletListItem";
+import TotalBalanceContainer from "../containers/TotalBalanceContainer";
+import WalletsListContainer from "../containers/WalletsListContainer";
+import { fetchWallets } from "../actions/walletsActions";
 
-import { getWallets, getTotalBalance } from "../apis/WalletInfo";
-
-export default class MyWallets extends React.Component {
+class MyWallets extends React.Component {
   static navigationOptions = {
     header: null
   };
 
-  state = {
-    wallets: [],
-    totalBalance: 0
-  };
-
   componentDidMount() {
-    const wallets = getWallets();
-    const totalBalance = getTotalBalance();
-
-    this.setState({ wallets, totalBalance });
+    this.props.doFetch();
   }
 
   render() {
     const { navigation } = this.props;
-    const { wallets, totalBalance } = this.state;
 
     return (
       <ScrollView style={styles.scroller}>
         <View style={styles.container}>
-          <TotalBalanceDisplay balance={totalBalance} />
-
+          <TotalBalanceContainer />
           <View style={styles.content}>
             <ContentTitle titleId="my-wallets.title">
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.push("AddWallet")
-                }
-              >
+              <TouchableOpacity onPress={() => navigation.push("AddWallet")}>
                 <PlusIcon color={Colors.textColor} />
               </TouchableOpacity>
             </ContentTitle>
-            {wallets.map((item, i) => (
-              <WalletListItem
-                first={i === 0}
-                key={item.name}
-                name={item.name}
-                balance={item.balance}
-                onOpen={() =>
-                  navigation.push("WalletView", {
-                    walletId: item.id
-                  })
-                }
-              />
-            ))}
+            <WalletsListContainer
+              onSelectWallet={id =>
+                navigation.push("WalletView", {
+                  walletId: id
+                })
+              }
+            />
           </View>
         </View>
       </ScrollView>
@@ -80,3 +60,14 @@ const styles = StyleSheet.create({
     margin: Layout.sideMargin
   }
 });
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+  doFetch: () => dispatch(fetchWallets())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyWallets);

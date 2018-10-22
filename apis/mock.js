@@ -155,8 +155,7 @@ export function getTotalBalance() {
 
 export function getWallets() {
   return walletsStore.map(wallet => ({
-    id: wallet.id,
-    name: wallet.name,
+    ...wallet,
     ...calculateStats(wallet)
   }));
 }

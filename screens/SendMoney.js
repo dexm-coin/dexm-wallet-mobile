@@ -13,7 +13,7 @@ import TextInput from "../components/TextInput";
 import DescriptionIcon from "../icons/DescriptionIcon";
 import PersonIcon from "../icons/PersonIcon";
 
-import { getWallet, getRecentRecipients } from "../apis/WalletInfo";
+import { getWallet, getRecentRecipients } from "../apis/walletInfo";
 
 export default class SendMoney extends React.Component {
   static navigationOptions = {

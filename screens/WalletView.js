@@ -4,43 +4,24 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import Colors from "../constants/Colors";
 import ContentTitle from "../components/ContentTitle";
 import Layout from "../constants/Layout";
-import WalletInfoDisplay from "../components/WalletInfoDisplay";
 import AccentContainer from "../components/AccentContainer";
 import Divider from "../components/Divider";
 import Button from "../components/Button";
 import SendIcon from "../icons/SendIcon";
 import ReceiveIcon from "../icons/ReceiveIcon";
 import BackButton from "../components/BackButton";
-import ActivityListItem from "../components/ActivityListItem";
 
-import { getWallet } from "../apis/WalletInfo";
+import WalletActivityContainer from "../containers/WalletActivityContainer";
+import WalletInfoDisplayContainer from "../containers/WalletInfoDisplayContainer";
 
 export default class WalletView extends React.Component {
   static navigationOptions = {
     header: null
   };
 
-  state = {
-    wallet: {
-      id: "",
-      name: "",
-      balance: 0,
-      revenues: 0,
-      expenses: 0,
-      activity: []
-    }
-  };
-
-  componentDidMount() {
-    const walletId = this.props.navigation.getParam("walletId", null);
-    const wallet = getWallet(walletId);
-
-    this.setState({ wallet });
-  }
-
   render() {
     const { navigation } = this.props;
-    const { wallet } = this.state;
+    const walletId = this.props.navigation.getParam("walletId", null);
 
     return (
       <ScrollView style={styles.scroller}>
@@ -52,12 +33,7 @@ export default class WalletView extends React.Component {
               onClick={() => navigation.pop()}
             />
             <View style={styles.accentContainer}>
-              <WalletInfoDisplay
-                name={wallet.name}
-                balance={wallet.balance}
-                revenues={wallet.revenues}
-                expenses={wallet.expenses}
-              />
+              <WalletInfoDisplayContainer walletId={walletId} />
               <Divider accent />
               <View style={styles.actionButtonsContainer}>
                 <Button
@@ -68,7 +44,7 @@ export default class WalletView extends React.Component {
                   icon={<ReceiveIcon receive color={Colors.lightColor} />}
                   onClick={() =>
                     navigation.push("ReceiveMoney", {
-                      walletId: wallet.id
+                      walletId
                     })
                   }
                 />
@@ -80,7 +56,7 @@ export default class WalletView extends React.Component {
                   icon={<SendIcon color={Colors.lightColor} />}
                   onClick={() =>
                     navigation.push("SendMoney", {
-                      walletId: wallet.id
+                      walletId
                     })
                   }
                 />
@@ -91,17 +67,7 @@ export default class WalletView extends React.Component {
           <View style={styles.content}>
             <ContentTitle titleId="wallet-view.title" />
             <View style={styles.list}>
-              {wallet.activity.map((item, i) => (
-                <ActivityListItem
-                  first={i === 0}
-                  last={i === wallet.activity.length - 1}
-                  key={item.description + item.recipientid + item.timestamp}
-                  description={item.description}
-                  amount={item.amount}
-                  recipient={item.recipientDescription}
-                  date={item.timestamp}
-                />
-              ))}
+              <WalletActivityContainer walletId={walletId} />
             </View>
           </View>
         </View>
@@ -128,7 +94,9 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginTop: Layout.spacing * 2
-    // marginBottom: Layout.spacing * 2.5
+  },
+  content: {
+    margin: Layout.sideMargin
   },
   actionButtonsContainer: {
     justifyContent: "flex-end",
@@ -137,9 +105,6 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     marginLeft: Layout.spacing * 2
-  },
-  content: {
-    margin: Layout.sideMargin
   },
   list: {
     marginLeft: Layout.spacing,
