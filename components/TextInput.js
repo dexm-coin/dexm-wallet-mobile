@@ -27,13 +27,6 @@ export default function TextInput({
     variant === "filled" ? styles.containerFilled : styles.containerOutlined;
   const valueStyle = variant === "filled" ? styles.valueAccent : styles.value;
 
-  const onChangeNumeric = text => {
-    const clean = text.replace(/[^\d.]/g, "");
-    const n = parseFloat(clean);
-    onChange(isNaN(n) ? 0 : n);
-  };
-  const onChangeText = numeric ? onChangeNumeric : onChange;
-
   return (
     <View {...{ style }}>
       {labelId ? (
@@ -48,7 +41,7 @@ export default function TextInput({
         <ReactTextInput
           style={valueStyle}
           value={value}
-          onChangeText={onChangeText}
+          onChangeText={onChange}
           keyboardType={numeric && "numeric"}
           underlineColorAndroid={"#00000000"}
           {...rest}

@@ -6,16 +6,27 @@ import WalletInfoDisplay from "../components/WalletInfoDisplay";
 class WalletInfoDisplayContainer extends React.PureComponent {
   render() {
     const { wallets, walletId } = this.props;
-    const wallet =
-      wallets.wallets && wallets.wallets.find(wallet => walletId === wallet.id);
-    console.log(wallet);
+
+    const wallet = wallets && wallets.find(wallet => walletId === wallet.id);
+    const balance = wallet.activity.reduce(
+      (sum, activity) => sum + activity.amount,
+      0
+    );
+    const revenues = wallet.activity.reduce(
+      (sum, activity) => (activity.amount > 0 ? sum + activity.amount : sum),
+      0
+    );
+    const expenses = wallet.activity.reduce(
+      (sum, activity) => (activity.amount < 0 ? sum + activity.amount : sum),
+      0
+    );
 
     return wallet ? (
       <WalletInfoDisplay
         name={wallet.name}
-        balance={wallet.balance}
-        revenues={wallet.revenues}
-        expenses={wallet.expenses}
+        balance={balance}
+        revenues={revenues}
+        expenses={expenses}
       />
     ) : null;
   }

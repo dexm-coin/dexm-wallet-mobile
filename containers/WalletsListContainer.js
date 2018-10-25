@@ -9,16 +9,20 @@ class WalletsListContainer extends React.PureComponent {
 
     return (
       <React.Fragment>
-        {wallets.wallets &&
-          wallets.wallets.map((item, i) => (
-            <WalletListItem
-              first={i === 0}
-              key={item.name}
-              name={item.name}
-              balance={item.balance}
-              onOpen={() => onSelectWallet(item.id)}
-            />
-          ))}
+        {wallets && wallets.length > 0
+          ? wallets.map((item, i) => (
+              <WalletListItem
+                first={i === 0}
+                key={item.name}
+                name={item.name}
+                balance={item.activity.reduce(
+                  (sum, activity) => sum + activity.amount,
+                  0
+                )}
+                onOpen={() => onSelectWallet(item.id)}
+              />
+            ))
+          : null}
       </React.Fragment>
     );
   }

@@ -6,48 +6,19 @@ import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import Fonts from "../constants/Fonts";
 import AccentContainer from "../components/AccentContainer";
-import Button from "../components/Button";
 import SendIcon from "../icons/SendIcon";
 import BackButton from "../components/BackButton";
-import TextInput from "../components/TextInput";
-import DescriptionIcon from "../icons/DescriptionIcon";
-import PersonIcon from "../icons/PersonIcon";
-
-import { getWallet, getRecentRecipients } from "../apis/walletInfo";
+import SendMoneyFormContainer from "../containers/SendMoneyFormContainer";
+import WalletNameProvider from "../containers/WalletNameProvider";
 
 export default class SendMoney extends React.Component {
   static navigationOptions = {
     header: null
   };
 
-  state = {
-    wallet: {
-      name: "",
-      balance: 0,
-      revenues: 0,
-      expenses: 0,
-      activity: []
-    },
-    formState: {
-      description: "",
-      amount: 0,
-      recipientDescription: "",
-      recipientId: ""
-    },
-    recents: []
-  };
-
-  componentDidMount() {
-    const walletId = this.props.navigation.getParam("walletId", null);
-    const wallet = getWallet(walletId);
-    const recents = getRecentRecipients();
-
-    this.setState({ wallet, recents });
-  }
-
   render() {
     const { navigation } = this.props;
-    const { wallet, formState } = this.state;
+    const walletId = this.props.navigation.getParam("walletId", null);
 
     return (
       <ScrollView style={styles.scroller}>
@@ -65,72 +36,19 @@ export default class SendMoney extends React.Component {
                 </FormattedMessage>
                 <SendIcon size={Layout.spacing * 7} color={Colors.lightColor} />
               </View>
-              <Text style={styles.walletName}>{wallet.name}</Text>
+              <WalletNameProvider>
+                {name => <Text style={styles.walletName}>{name}</Text>}
+              </WalletNameProvider>
             </View>
           </AccentContainer>
 
           <View style={styles.content}>
-            <TextInput
-              style={styles.formField}
-              labelId="send-money.description"
-              value={String(formState.description)}
-              onChange={this.handleChangeForm("description")}
-              icon={<DescriptionIcon color={Colors.textColor} />}
-            />
-            <TextInput
-              numeric
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={styles.formField}
-              labelId="send-money.amount"
-              value={String(formState.amount)}
-              onChange={this.handleChangeForm("amount")}
-              icon={<Text style={styles.iconD}>ⅅ</Text>}
-            />
-            <TextInput
-              style={styles.formField}
-              labelId="send-money.recipient-description"
-              value={String(formState.recipientDescription)}
-              onChange={this.handleChangeForm("recipientDescription")}
-              icon={<PersonIcon color={Colors.textColor} />}
-            />
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={styles.formField}
-              labelId="send-money.recipient-id"
-              value={String(formState.recipientId)}
-              onChange={this.handleChangeForm("recipientId")}
-              icon={<PersonIcon color={Colors.textColor} />}
-            />
-            <View style={styles.actionButtonsContainer}>
-              <Button
-                style={styles.actionButton}
-                labelId="send-money.contracts"
-                variant="outlined"
-                onClick={() => 0}
-              />
-              <Button
-                style={styles.actionButton}
-                labelId="send-money.send"
-                variant="filled"
-                onClick={() => 0}
-              />
-            </View>
+            <SendMoneyFormContainer walletId={walletId} />
           </View>
         </View>
       </ScrollView>
     );
   }
-
-  handleChangeForm = id => value => {
-    this.setState(({ formState }) => ({
-      formState: {
-        ...formState,
-        [id]: value
-      }
-    }));
-  };
 }
 
 const styles = StyleSheet.create({
@@ -156,7 +74,6 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginTop: Layout.spacing * 2
-    // marginBottom: Layout.spacing * 2.5
   },
   title: {
     ...Fonts.defaultAccent,
@@ -170,21 +87,5 @@ const styles = StyleSheet.create({
   },
   content: {
     margin: Layout.sideMargin
-  },
-  formField: {
-    marginBottom: Layout.spacing * 1.5
-  },
-  iconD: {
-    ...Fonts.default,
-    fontWeight: "500",
-    fontSize: 21
-  },
-  actionButtonsContainer: {
-    justifyContent: "flex-end",
-    flexDirection: "row",
-    marginTop: Layout.spacing * 2
-  },
-  actionButton: {
-    marginLeft: Layout.spacing * 2
   }
 });

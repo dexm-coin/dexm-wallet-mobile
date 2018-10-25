@@ -6,8 +6,13 @@ import TotalBalanceDisplay from "../components/TotalBalanceDisplay";
 class WalletsListContainer extends React.PureComponent {
   render() {
     const { wallets } = this.props;
-    const totalBalance = wallets.wallets
-      ? wallets.wallets.reduce((sum, wallet) => sum + wallet.balance, 0)
+    const totalBalance = wallets
+      ? wallets.reduce(
+          (sum, wallet) =>
+            sum +
+            wallet.activity.reduce((sum, activity) => sum + activity.amount, 0),
+          0
+        )
       : 0;
 
     return <TotalBalanceDisplay balance={totalBalance} />;

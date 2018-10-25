@@ -6,13 +6,13 @@ import ActivityListItem from "../components/ActivityListItem";
 class WalletActivityContainer extends React.PureComponent {
   render() {
     const { wallets, walletId } = this.props;
-    const wallet =
-      wallets.wallets && wallets.wallets.find(wallet => walletId === wallet.id);
+    const wallet = wallets && wallets.find(wallet => walletId === wallet.id);
 
     return (
       <React.Fragment>
         {(wallet &&
           wallet.activity &&
+          wallet.activity.length > 0 &&
           wallet.activity.map((item, i) => (
             <ActivityListItem
               first={i === 0}

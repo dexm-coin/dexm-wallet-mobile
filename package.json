@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "dexm-js": "https://github.com/dexm-coin/dexm-js.git",
     "expo": "^30.0.1",
     "intl": "^1.2.5",
     "luxon": "^1.4.3",
@@ -25,6 +26,8 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
+    "redux-persist": "^5.10.0",
+    "redux-persist-expo-securestore": "^0.1.1",
     "redux-saga": "^0.16.2"
   },
   "devDependencies": {

@@ -27,5 +27,6 @@ export default {
   "add-wallet.password": "Choose your password",
   "add-wallet.import": "Would you like to import a wallet?",
   "add-wallet.face-id": "Would you like to login with Face ID?",
+  "add-wallet.touch-id": "Would you like to login with Touch ID?",
   "add-wallet.fingerprint": "Would you like to login with fingerprint?"
 };

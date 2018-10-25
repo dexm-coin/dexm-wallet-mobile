@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
-import { connect } from "react-redux";
 
 import Colors from "../constants/Colors";
 import ContentTitle from "../components/ContentTitle";
@@ -8,16 +7,11 @@ import Layout from "../constants/Layout";
 import PlusIcon from "../icons/PlusIcon";
 import TotalBalanceContainer from "../containers/TotalBalanceContainer";
 import WalletsListContainer from "../containers/WalletsListContainer";
-import { fetchWallets } from "../actions/walletsActions";
 
 class MyWallets extends React.Component {
   static navigationOptions = {
     header: null
   };
-
-  componentDidMount() {
-    this.props.doFetch();
-  }
 
   render() {
     const { navigation } = this.props;
@@ -61,13 +55,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => ({
-  doFetch: () => dispatch(fetchWallets())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MyWallets);
+export default MyWallets;
